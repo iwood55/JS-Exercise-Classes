@@ -98,10 +98,14 @@ class Airplane {
       this.tank = this.tank + gallons
     }
     drive(distance){
-      this.odometer = this.odometer + distance
-      this.tank = this.tank - (distance/this.milesPerGallon)
-      if(this.tank === 0){
-        return `I ran out of fuel at ${this.odometer} miles!`;
+      if(this.tank > 0 && this.tank - (distance/this.milesPerGallon) > 0){
+        this.odometer = this.odometer + distance
+        this.tank = this.tank - (distance/this.milesPerGallon)
+      }
+      else{
+        this.odometer = this.odometer + (this.tank * this.milesPerGallon)
+        this.tank = 0
+        return `I ran out of fuel at ${this.odometer}`
       }
     }
   }
@@ -114,8 +118,6 @@ class Airplane {
   Mercedes.fill(20)
   console.log(Mercedes)
   Mercedes.drive(300)
-  console.log(Mercedes)
-  Mercedes.drive(200)
   console.log(Mercedes)
 
   
@@ -211,7 +213,7 @@ class Airplane {
       this.favSubjects = prop.favSubjects
     }
     listSubjects(){
-      return `Loving ${this.favSubjects}`
+      return `Loving ${this.favSubjects.join(', ')}`
     }
     PRAssignment(subject){
       return `${this.name} has submitted a PR for ${subject}`
